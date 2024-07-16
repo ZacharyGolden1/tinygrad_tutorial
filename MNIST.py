@@ -2,6 +2,15 @@ import numpy as np
 from tinygrad.helpers import Timing
 from tinygrad import Tensor
 
+## NETWORK LAYER
+class Linear:
+  def __init__(self, in_features, out_features, bias=True, initialization: str='kaiming_uniform'):
+    self.weight = getattr(Tensor, initialization)(out_features, in_features)
+    self.bias = Tensor.zeros(out_features) if bias else None
+
+  def __call__(self, x):
+    return x.linear(self.weight.transpose(), self.bias)
+
 ## NEURAL NETWORK
 class TinyNet:
   def __init__(self):
